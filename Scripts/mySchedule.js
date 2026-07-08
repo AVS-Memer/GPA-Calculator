@@ -7,7 +7,6 @@ let myCourses = JSON.parse(
 ) || [];
 
 
-
 // Load catalog
 
 Papa.parse(CSV_URL, {
@@ -27,36 +26,25 @@ complete:function(results){
 
 }
 
-
 });
 
 
-
-
-
 function searchCourses(){
-
     let query = document
         .getElementById("search")
         .value
         .toLowerCase()
         .trim();
 
-
     let box = document.getElementById("results");
 
-
     if(query.length < 2){
-
         box.innerHTML = "Start typing to search courses.";
-
         return;
-
     }
 
 
     let results = catalog.filter(course => {
-
         return (
 
             (course.Course_Name || "")
@@ -115,26 +103,21 @@ function displayResults(results){
         Credits: ${course.Credits}<br>
         Duration: ${course.Duration}<br>
         <button id="add-${index}">
-        Add Course
+        ${myCourses.some(c => c.Course_ID === course.Course_ID)
+            ? "Added ✓"
+            : "Add Course"}
         </button>
         `;
 
         div.querySelector("button")
-        .onclick = function(){
-
+        .onclick = function() {
             addCourse(course);
-
-            this.innerHTML="Added ✓";
-            this.disabled=true;
-
+            this.innerHTML = "Added ✓";
+            this.disabled = true;
         };
 
-
         box.appendChild(div);
-
-
     });
-
 }
 
 function clearSearch(){
