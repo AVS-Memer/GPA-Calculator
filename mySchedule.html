@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>GPA Calculator | The AVS Site</title>
+    <link rel="icon" type="image/x-icon" href="/Data/Images/Icons/AVS.jpeg">
+    <link href="Stylesheets/mySchedule.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+    <div class="container">
+    <h1>My Schedule</h1>
+    <div class="card">
+    <h2>Add Courses</h2>
+    <input
+    id="search"
+    placeholder="Search course name, ID, or department..."
+    oninput="searchCourses()"
+    >
+    <button onclick="clearSearch()">Clear</button>
+    <div id="results"></div>
+    </div>
+    <div class="card">
+    <h2>Saved Courses</h2>
+    <table>
+    <thead>
+    <tr>
+    <th>Course</th>
+    <th>Level</th>
+    <th>Credits</th>
+    <th>Grade</th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody id="schedule">
+    </tbody>
+    </table>
+    </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="Scripts/mySchedule.js"></script>
+  </body>
+</html>
