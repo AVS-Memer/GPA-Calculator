@@ -183,12 +183,10 @@ function gradeOptions(selected = "") {
 
     return grades.map(g =>
         `<option value="${g}" ${g === selected ? "selected" : ""}>
-            ${g || "No Grade"}
+            ${g || "Select Grade"}
         </option>`
     ).join("");
 }
-
-
 
 function timePeriodOptions(selected = "") {
     let periods = [];
@@ -263,45 +261,8 @@ Remove
 </td>
 
 `;
-
-
 table.appendChild(row);
-
-
 });
-
-
-}
-
-
-
-
-function gradeOptions(selected){
-
-
-let grades =
-[
-"A",
-"A-",
-"B+",
-"B",
-"B-",
-"C+",
-"C",
-"C-",
-"D",
-"F"
-];
-
-
-return grades.map(g =>
-
-`<option ${g===selected?"selected":""}>
-${g}
-</option>`
-
-).join("");
-
 }
 
 function changeGrade(index,grade) {
