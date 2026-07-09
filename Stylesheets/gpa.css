@@ -1,0 +1,28 @@
+body {
+    font-family: Arial;
+    background:#f5f7fb;
+    padding:25px;
+}
+
+.container {
+    max-width:900px;
+    margin:auto;
+}
+
+.card {
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.gpa {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.course {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
