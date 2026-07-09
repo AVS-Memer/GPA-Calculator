@@ -7,7 +7,7 @@ document.getElementById("allCourseGPA").innerHTML = allCourseResult.GPA.toFixed(
 document.getElementById("allCourseCredits").innerHTML = "Credits: " + allCourseResult.Credits;
 
 // Core GPA
-let coreResult = calculateGPA(courses);
+let coreResult = calculateCoreGPA(courses);
 
 document.getElementById("coreGPA").innerHTML = coreResult.GPA.toFixed(2);
 document.getElementById("coreCredits").innerHTML = "Credits: " + coreResult.Credits;
