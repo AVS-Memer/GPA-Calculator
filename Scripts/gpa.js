@@ -9,7 +9,7 @@ document.getElementById("allCourseCredits").innerHTML =
 "Credits: " + allCourseResult.Credits;
 
 // Core GPA
-let coreResult = calculateAllCourseGPA(courses);
+let coreResult = calculateGPA(courses);
 
 document.getElementById("coreGPA").innerHTML = "--";
 
