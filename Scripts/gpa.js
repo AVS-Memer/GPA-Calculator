@@ -3,17 +3,14 @@ let courses = JSON.parse(localStorage.getItem("myCourses")) || [];
 // All course GPA
 let allCourseResult = calculateAllCourseGPA(courses);
 
-document.getElementById("allCourseGPA").innerHTML =
-allCourseResult.GPA.toFixed(2);
-document.getElementById("allCourseCredits").innerHTML =
-"Credits: " + allCourseResult.Credits;
+document.getElementById("allCourseGPA").innerHTML = allCourseResult.GPA.toFixed(2);
+document.getElementById("allCourseCredits").innerHTML = "Credits: " + allCourseResult.Credits;
 
 // Core GPA
 let coreResult = calculateGPA(courses);
 
-document.getElementById("coreGPA").innerHTML = "--";
-
-document.getElementById("coreCredits").innerHTML = "Credits: --";
+document.getElementById("coreGPA").innerHTML = coreResult.GPA.toFixed(2);
+document.getElementById("coreCredits").innerHTML = "Credits: " + coreResult.Credits;
 
 let box = document.getElementById("courses");
 
