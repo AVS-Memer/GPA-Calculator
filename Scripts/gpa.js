@@ -19,7 +19,7 @@ let box = document.getElementById("courses");
 
 if (coreResult.Courses.length === 0) box.innerHTML = "Core GPA course breakdown will appear here.";
 else {
-    result.Courses.forEach(course=>{
+    coreResult.Courses.forEach(course=>{
         let div =
         document.createElement("div");
         div.className="course";
