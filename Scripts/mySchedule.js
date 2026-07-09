@@ -2,10 +2,7 @@ const CSV_URL = "https://docs.google.com/spreadsheets/d/1KDRPtNekAZ10rPEsTmTyyaD
 
 let catalog = [];
 
-let myCourses = JSON.parse(
-    localStorage.getItem("myCourses")
-) || [];
-
+let myCourses = JSON.parse(localStorage.getItem("myCourses")) || [];
 
 // Load catalog
 
@@ -26,25 +23,36 @@ complete:function(results){
 
 }
 
+
 });
 
 
+
+
+
 function searchCourses(){
+
     let query = document
         .getElementById("search")
         .value
         .toLowerCase()
         .trim();
 
+
     let box = document.getElementById("results");
 
+
     if(query.length < 2){
+
         box.innerHTML = "Start typing to search courses.";
+
         return;
+
     }
 
 
     let results = catalog.filter(course => {
+
         return (
 
             (course.Course_Name || "")
@@ -103,78 +111,99 @@ function displayResults(results){
         Credits: ${course.Credits}<br>
         Duration: ${course.Duration}<br>
         <button id="add-${index}">
-        ${myCourses.some(c => c.Course_ID === course.Course_ID)
-            ? "Added ✓"
-            : "Add Course"}
+        Add Course
         </button>
         `;
 
         div.querySelector("button")
-        .onclick = function() {
+        .onclick = function(){
+
             addCourse(course);
-            this.innerHTML = "Added ✓";
-            this.disabled = true;
+
+            this.innerHTML="Added ✓";
+            this.disabled=true;
+
         };
 
+
         box.appendChild(div);
+
+
     });
+
 }
 
 function clearSearch(){
-
-    document.getElementById("search").value="";
-
-    document.getElementById("results").innerHTML="";
-
+    document.getElementById("search").value = "";
+    document.getElementById("results").innerHTML = "";
 }
 
 
 function addCourse(course){
+  let exists = myCourses.some(c => c.Course_ID === course.Course_ID);
 
+  if(exists) {
+    alert("Course already added.");
+    return;
+  }
 
-let exists =
-myCourses.some(c =>
-c.Course_ID === course.Course_ID
-);
+  myCourses.push({
+      Course_ID: course.Course_ID,
+      Course_Name: course.Course_Name,
+      Department: course.Department,
+      Level: course.Level,
+      Credits: Number(course.Credits),
+      Time_Period: "",
+      Grade: ""
+  });
 
-
-if(exists){
-
-alert("Course already added.");
-
-return;
-
+  saveCourses();
+  renderSchedule();
 }
 
 
 
-myCourses.push({
+function gradeOptions(selected = "") {
+    let grades = [
+        "",
+        "A+",
+        "A",
+        "A-",
+        "B+",
+        "B",
+        "B-",
+        "C+",
+        "C",
+        "C-",
+        "D+",
+        "D",
+        "D-",
+        "F"
+    ];
 
-Course_ID: course.Course_ID,
-
-Course_Name: course.Course_Name,
-
-Department: course.Department,
-
-Level: course.Level,
-
-Credits: Number(course.Credits),
-
-Grade: "A"
-
-
-});
-
-
-saveCourses();
-
-renderSchedule();
-
-
+    return grades.map(g =>
+        `<option value="${g}" ${g === selected ? "selected" : ""}>
+            ${g || "No Grade"}
+        </option>`
+    ).join("");
 }
 
 
 
+function timePeriodOptions(selected = "") {
+    let periods = [];
+
+    for (let i = 2026; i >= 2020; i--) {
+      periods.push("Summer "+i);
+      periods.push((i-1)+"-"+i);
+    }
+
+    return periods.map(p =>
+        `<option value="${p}" ${p === selected ? "selected" : ""}>
+            ${p || "No Time Period"}
+        </option>`
+    ).join("");
+}
 
 function renderSchedule(){
 
@@ -201,6 +230,15 @@ row.innerHTML=`
 
 <td>${course.Credits}</td>
 
+<td>
+
+<select onchange="changeTimePeriod(${index}, this.value)">
+
+${timePeriodOptions(course.Time_Period)}
+
+</select>
+
+</td>
 
 <td>
 
@@ -266,41 +304,22 @@ ${g}
 
 }
 
-
-
-
-
-function changeGrade(index,grade){
-
-
-myCourses[index].Grade = grade;
-
-saveCourses();
-
-
+function changeGrade(index,grade) {
+  myCourses[index].Grade = grade;
+  saveCourses();
 }
 
-
-
-
+function changeTimePeriod(index, value) {
+  myCourses[index].Time_Period = value;
+  saveCourses();
+}
 
 function removeCourse(index){
-
-
-myCourses.splice(index,1);
-
-saveCourses();
-
-renderSchedule();
-
-
+  myCourses.splice(index,1);
+  saveCourses();
+  renderSchedule();
 }
 
 function saveCourses(){
-
-localStorage.setItem(
-    "myCourses",
-    JSON.stringify(myCourses)
-);
-
+  localStorage.setItem("myCourses", JSON.stringify(myCourses));
 }
