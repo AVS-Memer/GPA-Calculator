@@ -6,7 +6,53 @@
     <link href="Stylesheets/style.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
-    <h1>Hello this calculates GPA</h1>
+    <div class="container">
+      <h1>GPA Planner</h1>
+      <div class="card">
+        <h2>Student Setup</h2>
+        <div class="profile">
+          <label>Graduation Year:</label>
+          <select id="gradYear" onchange="saveProfile()">
+            <option value="">Select</option>
+            <option>2026</option>
+            <option>2027</option>
+            <option>2028</option>
+            <option>2029</option>
+            <option>2030</option>
+          </select>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Academic Summary</h2>
+        <div class="stats">
+          <div class="stat">
+            Courses
+            <div class="number" id="courseCount">0</div>
+          </div>
+          <div class="stat">
+            Credits
+            <div class="number" id="creditCount">0</div>
+          </div>
+          <div class="stat">
+            Time Periods
+            <div class="number" id="periodCount">0</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>My Courses</h2>
+        <div id="courses">No courses added yet.</div>
+      </div>
+      <div class="card">
+        <h2>Tools</h2>
+        <div class="links">
+          <a class="link" href="catalog.html">📚 Course Catalog</a>
+          <a class="link" href="gpa.html">📊 GPA Calculator</a>
+          <a class="link" href="whatif.html">🔮 What-If Scenarios</a>
+          <a class="link" href="rank.html">📈 Rank Estimate</a>
+        </div>
+      </div>
+    </div>
     <script src="Scripts/script.js"></script>
   </body>
 </html>
