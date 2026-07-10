@@ -192,8 +192,8 @@ function timePeriodOptions(selected = "") {
     let periods = [];
 
     for (let i = 2026; i >= 2020; i--) {
-      periods.push("Summer "+i);
       periods.push((i-1)+"-"+i);
+      periods.push("Summer "+i);
     }
 
     return periods.map(p =>
