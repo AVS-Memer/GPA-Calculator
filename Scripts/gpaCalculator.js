@@ -59,7 +59,7 @@ function calculateYearCoreGPA(courses) {
     let included = [];
     // Step 1: Graduation requirements
     courses.forEach(course => {
-        if (course.Graduation_Requirement === true) {
+        if (course.Graduation_Requirement === "TRUE" && coreDepartments.includes(course.Department)) {
             let points = calculateCourseGPA(course);
             if (points !== null) {
                 included.push({
