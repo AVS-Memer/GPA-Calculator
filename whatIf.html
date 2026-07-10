@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>GPA Calculator | The AVS Site</title>
+    <link rel="icon" type="image/x-icon" href="/Data/Images/Icons/AVS.jpeg">
+    <link href="Stylesheets/whatIf.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+    <div class="container">
+      <h1>What-If Scenario</h1>
+      <div class="card">
+        <h2>Search Courses</h2>
+        <input id="search" placeholder="Search courses..." oninput="searchCourses()">
+        <div id="results">Start typing to search courses.</div>
+      </div>
+      <div class="card">
+        <h2>Planned Courses</h2>
+        <table border="1" cellpadding="5">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Level</th>
+              <th>Credits</th>
+              <th>Time Period</th>
+              <th>Expected Grade</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="scenarioTable"></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h2>Projected GPA</h2>
+        <div id="gpaResults">Add courses to see projected GPA.</div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="Scripts/whatIf.js"></script>
+  </body>
+</html>
