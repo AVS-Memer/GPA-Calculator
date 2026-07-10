@@ -16,27 +16,37 @@ let box = document.getElementById("courses");
 
 if (coreResult.Courses.length === 0) box.innerHTML = "Core GPA course breakdown will appear here.";
 else {
-    coreResult.Courses.forEach(course=>{
-        let div =
-        document.createElement("div");
-        div.className="course";
-        div.innerHTML = `
-        <b>${course.Course_Name}</b><br>
-
-        ${course.Level}
-        |
-        ${course.Grade}
-
-        <br>
-
-        GPA Value:
-        ${course.GPA_Points.toFixed(2)}
-
-        <br>
-
-        Credits:
-        ${course.Credits}
+    coreResult.Years.forEach(year => {
+        let yearDiv = document.createElement("div");
+        yearDiv.className = "year-box";
+        yearDiv.innerHTML = `
+            <h3>${year.Year}</h3>
+            GPA:
+            ${year.GPA.toFixed(2)}
+            <br>
+            Credits:
+            ${year.Credits}
         `;
-        box.appendChild(div);
+        year.Courses.forEach(course => {
+            let div = document.createElement("div");
+            div.className = "course";
+            div.innerHTML = `
+                <b>${course.Course_Name}</b><br>
+                ${course.Level}
+                |
+                ${course.Department}
+                <br>
+                Grade:
+                ${course.Grade}
+                <br>
+                GPA Value:
+                ${course.GPA_Points.toFixed(2)}
+                <br>
+                Credits:
+                ${course.Credits}
+            `;
+            yearDiv.appendChild(div);
+        });
+        box.appendChild(yearDiv);
     });
 }
