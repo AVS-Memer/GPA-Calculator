@@ -1,40 +1,23 @@
 const CSV_URL =
 "https://docs.google.com/spreadsheets/d/1KDRPtNekAZ10rPEsTmTyyaDX3QFJlGQSstGdloJKV7c/export?format=csv";
 
-
 let catalog = [];
-
 
 let whatIfCourses =
 JSON.parse(localStorage.getItem("whatIfCourses")) || [];
 
 
-
 Papa.parse(CSV_URL, {
-
-download:true,
-
-header:true,
-
-skipEmptyLines:true,
-
-
-complete:function(results){
-
+  download:true,
+  header:true,
+  skipEmptyLines:true,
+  complete:function(results){
     catalog = results.data;
-
     renderScenario();
-
-}
-
+  }
 });
 
-
-
-
 function searchCourses(){
-
-
 let query =
 document.getElementById("search")
 .value
@@ -45,15 +28,9 @@ document.getElementById("search")
 let box =
 document.getElementById("results");
 
-
-
 if(query.length < 2){
-
-    box.innerHTML =
-    "Start typing to search courses.";
-
-    return;
-
+  box.innerHTML = "Start typing to search courses.";
+  return;
 }
 
 
@@ -310,110 +287,69 @@ Credits:
 ${core.Credits}
 
 `;
-
-
-
 }
 
 
 
 
 function removeCourse(index){
-
-whatIfCourses.splice(index,1);
-
-saveScenario();
-
-renderScenario();
-
+  whatIfCourses.splice(index,1);
+  saveScenario();
+  renderScenario();
 }
 
 
 
 function changeGrade(index,value){
-
-whatIfCourses[index].Grade=value;
-
-saveScenario();
-
-calculateProjected();
-
+  whatIfCourses[index].Grade=value;
+  saveScenario();
+  calculateProjected();
 }
 
 
 
-function changeTime(index,value){
-
-whatIfCourses[index].Time_Period=value;
-
-saveScenario();
-
-calculateProjected();
-
+function changeTime(index,value) {
+  whatIfCourses[index].Time_Period=value;
+  saveScenario();
+  calculateProjected();
 }
-
-
-
 
 function saveScenario(){
-
-localStorage.setItem(
-"whatIfCourses",
-JSON.stringify(whatIfCourses)
-);
-
+  localStorage.setItem("whatIfCourses",JSON.stringify(whatIfCourses));
 }
-
-
 
 function gradeOptions(selected=""){
+  let grades = [
+  "",
+  "A",
+  "A-",
+  "B+",
+  "B",
+  "B-",
+  "C+",
+  "C",
+  "C-",
+  "D+",
+  "D",
+  "D-",
+  "F"
+  ];
 
-
-let grades=[
-"",
-"A",
-"A-",
-"B+",
-"B",
-"B-",
-"C+",
-"C",
-"C-",
-"D+",
-"D",
-"D-",
-"F"
-];
-
-
-return grades.map(g=>
-
-`<option value="${g}" ${g===selected?"selected":""}>
-${g || "Select Grade"}
-</option>`
-
-).join("");
-
+  return grades.map(g => `<option value="${g}" ${g===selected?"selected":""}>${g || "Select Grade"}</option>`).join("");
 }
 
 
 
-function timeOptions(selected=""){
+function timeOptions(selected = "") {
+  let graduationYear = Number(localStorage.getItem("graduationYear")) || 2026;
 
+  let periods = [];
 
-let periods=[];
+  // Start from current possible year
+  for (let i = graduationYear; i > 2026; i--) {
+    periods.push((i-1)+"-"+i);
+    periods.push("Summer "+(i-1));
+  }
 
-
-for(let i=2026;i>=2020;i--){
-  periods.push((i-1)+"-"+i);
-  periods.push("Summer "+i);
-}
-
-
-
-return periods.map(p=>
-`<option value="${p}" ${p===selected?"selected":""}>
-${p}
-</option>`
-).join("");
+  return periods.map(p => `<option value="${p}" ${p === selected ? "selected" : ""}>${p}</option>`).join("");
 }
