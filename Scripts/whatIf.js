@@ -17,179 +17,69 @@ Papa.parse(CSV_URL, {
   }
 });
 
-function searchCourses(){
-let query =
-document.getElementById("search")
-.value
-.toLowerCase()
-.trim();
-
-
-let box =
-document.getElementById("results");
-
-if(query.length < 2){
-  box.innerHTML = "Start typing to search courses.";
-  return;
+function searchCourses() {
+  let query = document.getElementById("search").value.toLowerCase().trim();
+  
+  let box = document.getElementById("results");
+  
+  if (query.length < 2) {
+    box.innerHTML = "Start typing to search courses.";
+    return;
+  }
+  
+  let results = catalog.filter(course => {
+    return ((course.Course_Name || "").toLowerCase().includes(query) || (course.Course_ID || "").toLowerCase().includes(query) || (course.Department || "").toLowerCase().includes(query));
+  });
+  displayResults(results.slice(0,20));
 }
 
-
-
-let results =
-catalog.filter(course=>{
-
-
-return (
-
-(course.Course_Name || "")
-.toLowerCase()
-.includes(query)
-
-||
-
-(course.Course_ID || "")
-.toLowerCase()
-.includes(query)
-
-||
-
-(course.Department || "")
-.toLowerCase()
-.includes(query)
-
-);
-
-
-});
-
-
-
-displayResults(results.slice(0,20));
-
-
-}
-
-
-
-
-function displayResults(results){
-
-
-let box =
-document.getElementById("results");
-
-
-box.innerHTML="";
-
-
-
-results.forEach(course=>{
-
-
-let div =
-document.createElement("div");
-
-
-div.className="course-result";
-
-
-div.innerHTML=`
-
-<b>${course.Course_Name}</b><br>
-
-${course.Level}
-|
-${course.Department}
-
-<br>
-
-Credits:
-${course.Credits}
-
-<br>
-
-<button>Add</button>
-
-`;
-
-
-
-div.querySelector("button")
-.onclick=function(){
-
-addCourse(course);
-
-};
-
-
-
-box.appendChild(div);
-
-
-});
-
-
+function displayResults(results) {
+  let box = document.getElementById("results");
+  box.innerHTML="";
+  results.forEach(course=>{
+    let div = document.createElement("div");
+    div.className="course-result";
+    div.innerHTML=`<b>${course.Course_Name}</b>
+    <br>
+    ${course.Level}|${course.Department}
+    <br>
+    Credits:${course.Credits}
+    <br>
+    <button>Add</button>`;
+    div.querySelector("button").onclick=function(){
+      addCourse(course);
+    };
+    box.appendChild(div);
+  });
 }
 
 
 
 
 function addCourse(course){
-
-
-whatIfCourses.push({
-
-Course_ID: course.Course_ID,
-
-Course_Name: course.Course_Name,
-
-Department: course.Department,
-
-Level: course.Level,
-
-Credits: Number(course.Credits),
-
-Graduation_Requirement:
-course.Graduation_Requirement === "TRUE"
-||
-course.Graduation_Requirement === true,
-
-Time_Period:"",
-
-Grade:""
-
-
-});
-
-
-saveScenario();
-
-renderScenario();
-
-
+  whatIfCourses.push({
+    Course_ID: course.Course_ID,
+    Course_Name: course.Course_Name,
+    Department: course.Department,
+    Level: course.Level,
+    Credits: Number(course.Credits),
+    Graduation_Requirement:
+    course.Graduation_Requirement === "TRUE",
+    Time_Period:"",
+    Grade:""
+  });
+  saveScenario();
+  renderScenario();
 }
 
 
 
 
-function renderScenario(){
-
-
-let table =
-document.getElementById("scenarioTable");
-
-
+function renderScenario() {
+let table = document.getElementById("scenarioTable");
 table.innerHTML="";
-
-
-
 whatIfCourses.forEach((course,index)=>{
-
-
-let row =
-document.createElement("tr");
-
-
+let row = document.createElement("tr");
 
 row.innerHTML=`
 
