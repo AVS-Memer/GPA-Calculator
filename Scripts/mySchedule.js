@@ -166,7 +166,6 @@ function addCourse(course){
 function gradeOptions(selected = "") {
     let grades = [
         "",
-        "A+",
         "A",
         "A-",
         "B+",
