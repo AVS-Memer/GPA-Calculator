@@ -39,24 +39,28 @@ function displayResults(results) {
   results.forEach(course=>{
     let div = document.createElement("div");
     div.className="course-result";
-    div.innerHTML=`<b>${course.Course_Name}</b>
+    div.innerHTML=`
+    <b>${course.Course_Name}</b>
     <br>
     ${course.Level}|${course.Department}
     <br>
     Credits:${course.Credits}
     <br>
-    <button>Add</button>`;
-    div.querySelector("button").onclick=function(){
+    <button>${whatIfCourses.some(c => c.Course_ID === course.Course_ID) ? "Added ✓" : "Add"}</button>`;
+    
+    let button = div.querySelector("button");
+    if (whatIfCourses.some(c => c.Course_ID === course.Course_ID)) button.disabled = true;
+    
+    button.onclick=function() {
       addCourse(course);
+      this.innerHTML="Added ✓";
+      this.disabled=true;
     };
     box.appendChild(div);
   });
 }
 
-
-
-
-function addCourse(course){
+function addCourse(course) {
   whatIfCourses.push({
     Course_ID: course.Course_ID,
     Course_Name: course.Course_Name,
@@ -72,97 +76,43 @@ function addCourse(course){
   renderScenario();
 }
 
-
-
-
 function renderScenario() {
-let table = document.getElementById("scenarioTable");
-table.innerHTML="";
-whatIfCourses.forEach((course,index)=>{
-let row = document.createElement("tr");
-
-row.innerHTML=`
-
-<td>${course.Course_Name}</td>
-
-<td>${course.Level}</td>
-
-<td>${course.Credits}</td>
-
-
-<td>
-
-<select onchange="changeTime(${index},this.value)">
-
-${timeOptions(course.Time_Period)}
-
-</select>
-
-</td>
-
-
-<td>
-
-<select onchange="changeGrade(${index},this.value)">
-
-${gradeOptions(course.Grade)}
-
-</select>
-
-</td>
-
-
-<td>
-
-<button onclick="removeCourse(${index})">
-Remove
-</button>
-
-</td>
-
-`;
-
-
-
-table.appendChild(row);
-
-
-});
-
-
-calculateProjected();
-
-
+  let table = document.getElementById("scenarioTable");
+  table.innerHTML = "";
+  whatIfCourses.forEach((course,index) => {
+    let row = document.createElement("tr");
+    row.innerHTML=`
+    <td>${course.Course_Name}</td>
+    <td>${course.Level}</td>
+    <td>${course.Credits}</td>
+    <td>
+      <select onchange="changeTime(${index},this.value)">${timeOptions(course.Time_Period)}</select>
+    </td>
+    <td>
+      <select onchange="changeGrade(${index},this.value)">${gradeOptions(course.Grade)}</select>
+    </td>
+    <td>
+      <button onclick="removeCourse(${index})">Remove</button>
+    </td>
+    `;
+    table.appendChild(row);
+  });
+  calculateProjected();
 }
 
 
 
 
 function calculateProjected(){
+let current = JSON.parse(localStorage.getItem("myCourses")) || [];
 
+let combined = current.concat(whatIfCourses);
 
-let current =
-JSON.parse(localStorage.getItem("myCourses"))
-|| [];
+let all = calculateAllCourseGPA(combined);
 
+let core = calculateCoreGPA(combined);
 
-
-let combined =
-current.concat(whatIfCourses);
-
-
-
-let all =
-calculateAllCourseGPA(combined);
-
-
-let core =
-calculateCoreGPA(combined);
-
-
-
-document.getElementById("gpaResults")
-.innerHTML=`
+document.getElementById("gpaResults").innerHTML=`
 
 All Course GPA:
 <b>${all.GPA.toFixed(2)}</b>
@@ -179,16 +129,11 @@ ${core.Credits}
 `;
 }
 
-
-
-
 function removeCourse(index){
   whatIfCourses.splice(index,1);
   saveScenario();
   renderScenario();
 }
-
-
 
 function changeGrade(index,value){
   whatIfCourses[index].Grade=value;
@@ -196,15 +141,13 @@ function changeGrade(index,value){
   calculateProjected();
 }
 
-
-
 function changeTime(index,value) {
   whatIfCourses[index].Time_Period=value;
   saveScenario();
   calculateProjected();
 }
 
-function saveScenario(){
+function saveScenario() {
   localStorage.setItem("whatIfCourses",JSON.stringify(whatIfCourses));
 }
 
