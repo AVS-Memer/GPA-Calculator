@@ -1,6 +1,5 @@
 // this is for shared gpaCalculator.js - check line 51
 const gradePoints = {
-    "A+": 4.00,
     "A": 4.00,
     "A-": 3.66,
     "B+": 3.33,
@@ -14,6 +13,14 @@ const gradePoints = {
     "D-": 0.66,
     "F": 0.00
 };
+
+const coreDepartments = [
+    "English",
+    "Social Studies",
+    "Mathematics",
+    "Science",
+    "World Languages"
+];
 
 function calculateCourseGPA(course){
     let grade = course.Grade;
@@ -74,8 +81,11 @@ function calculateCoreGPA(courses) {
         if (includedIDs.has(course.Course_ID)) return;
         let points = calculateCourseGPA(course);
         if (points === null) return;
-        let subject =
-            course.Department || "Other";
+        let subject = course.Department || "Other";
+
+        // Ignore non-core departments
+        if (!coreDepartments.includes(subject)) return;
+        
         if (!subjectGroups[subject]) subjectGroups[subject] = [];
         subjectGroups[subject].push({
             ...course,
