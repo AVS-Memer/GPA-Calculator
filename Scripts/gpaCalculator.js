@@ -42,6 +42,7 @@ function calculateAllCourseGPA(courses) {
     let totalPoints = 0;
     let totalCredits = 0;
     courses.forEach(course => {
+        if (course.Time_Period.includes("Summer")) return;
         let points = calculateCourseGPA(course);
         if (points === null) return;
         let credits = Number(course.Credits) || 0;
@@ -129,9 +130,7 @@ function calculateYearCoreGPA(courses) {
 function calculateCoreGPA(courses) {
     let years = {};
     courses.forEach(course => {
-        if (!course.Time_Period) return;
-        // Ignore summers
-        if (course.Time_Period.toLowerCase().includes("summer")) return;
+        if (!course.Time_Period || course.Time_Period.includes("Summer")) return;
         if (!years[course.Time_Period]) years[course.Time_Period] = [];
         years[course.Time_Period].push(course);
     });
