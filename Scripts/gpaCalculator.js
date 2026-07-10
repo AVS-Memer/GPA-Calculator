@@ -48,24 +48,80 @@ function calculateAllCourseGPA(courses) {
     };
 }
 
-function calculateGPA(courses) { // unfinished
-    let totalPoints = 0;
-    let totalCredits = 0;
+function calculateCoreGPA(courses) {
     let included = [];
+
+    // Step 1: Graduation requirements
     courses.forEach(course => {
+        if (course.Graduation_Requirement === true) {
+            let points = calculateCourseGPA(course);
+            if (points !== null) {
+                included.push({
+                    ...course,
+                    GPA_Points: points
+                });
+            }
+        }
+    });
+
+    // Keep track of courses already counted
+    let includedIDs =
+        new Set(included.map(c => c.Course_ID));
+
+    // Step 2: Highest GPA course per subject
+    let subjectGroups = {};
+    courses.forEach(course => {
+        if (includedIDs.has(course.Course_ID)) return;
         let points = calculateCourseGPA(course);
         if (points === null) return;
-        let credits = Number(course.Credits) || 0;
-        totalPoints += points*credits;
-        totalCredits += credits;
-        included.push({
-          ...course,
-          GPA_Points: points
+        let subject =
+            course.Department || "Other";
+        if (!subjectGroups[subject]) subjectGroups[subject] = [];
+        subjectGroups[subject].push({
+            ...course,
+            GPA_Points: points
         });
     });
 
+    Object.keys(subjectGroups).forEach(subject => {
+        let bestCourse =
+            subjectGroups[subject]
+            .sort((a,b) =>
+                b.GPA_Points - a.GPA_Points
+            )[0];
+        included.push(bestCourse);
+        includedIDs.add(bestCourse.Course_ID);
+    });
+
+    // Step 3: Add remaining AP courses
+    courses.forEach(course => {
+        if (course.Level !== "AP") return;
+        if (includedIDs.has(course.Course_ID)) return;
+        let points =
+            calculateCourseGPA(course);
+        if (points === null) return;
+        included.push({
+            ...course,
+            GPA_Points: points
+        });
+        includedIDs.add(course.Course_ID);
+    });
+
+    // Calculate GPA
+    let totalPoints = 0;
+    let totalCredits = 0;
+    included.forEach(course => {
+        let credits =
+            Number(course.Credits) || 0;
+        totalPoints +=
+            course.GPA_Points * credits;
+        totalCredits += credits;
+    });
     return {
-        GPA: totalCredits === 0 ? 0 : totalPoints / totalCredits,
+        GPA:
+            totalCredits === 0
+            ? 0
+            : totalPoints / totalCredits,
         Credits: totalCredits,
         Courses: included
     };
