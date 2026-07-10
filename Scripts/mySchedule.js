@@ -153,6 +153,7 @@ function addCourse(course){
       Department: course.Department,
       Level: course.Level,
       Credits: Number(course.Credits),
+      Graduation_Requirement: course.Graduation_Requirement,
       Time_Period: "",
       Grade: ""
   });
