@@ -1,97 +1,39 @@
 function getAcademicYear(course){
-
     if (!course.Time_Period) return null;
-
     // Ignore summer for academic year detection
-    if(course.Time_Period.startsWith("Summer")){
-        return null;
-    }
-
+    if (course.Time_Period.startsWith("Summer")) return null;
     return course.Time_Period;
-
 }
-
 
 function getStartYear(timePeriod){
-
-    if(!timePeriod) return null;
-
+    if (!timePeriod) return null;
     return Number(timePeriod.split("-")[0]);
-
 }
 
-
-
 // Check if enough courses exist for each year
-
 function validateRankEligibility(courses, graduationYear){
-
     let warnings = [];
-
-
-    if(!graduationYear){
-
-        warnings.push(
-            "Enter your graduation year in settings."
-        );
-
+    if (!graduationYear) {
+        warnings.push("Enter your graduation year in settings.");
         return warnings;
     }
-
-
-    let seniorStart =
-        graduationYear - 1;
-
-
+    let seniorStart = graduationYear - 1;
     let years = {};
-
-
     courses.forEach(course=>{
-
-
-        if(!course.Time_Period)
-            return;
-
-
+        if (!course.Time_Period) return;
         // Count summers for enrollment check
-
         let year;
+        if (course.Time_Period.startsWith("Summer")) {
+            year = Number(course.Time_Period.replace("Summer ",""))-1;
+            year = year+"-"+(year+1);
+        } else year = course.Time_Period;
 
-
-        if(course.Time_Period.startsWith("Summer")){
-
-            year =
-            Number(
-                course.Time_Period.replace("Summer ","")
-            ) - 1;
-
-            year =
-            year + "-" + (year+1);
-
-        }
-        else{
-
-            year = course.Time_Period;
-
-        }
-
-
-        let start =
-        getStartYear(year);
-
+        let start = getStartYear(year);
 
         // Ignore senior year
-
-        if(start >= seniorStart)
-            return;
-
-
-        if(!years[year])
-            years[year]=0;
-
-
+        if(start >= seniorStart) return;
+        if(!years[year]) years[year]=0;
         years[year]++;
-
     });
 
 
