@@ -252,14 +252,13 @@ P.observe('numericValue', function() {
   }
 });
 
-// 3. The function triggered by your website interface button element
-function updateGPA() {
-  // Grab the input
+window.addEventListener("load", () => {
   let g = calculateRankEstimate();
   if (g !== null) {
+    document.getElementById("usedGPA").innerHTML = "Projected Core GPA: " + gpa.toFixed(3);
     calculator.setExpression({
       id: "20",
       latex: "G="+g
     });
   }
-}
+});
