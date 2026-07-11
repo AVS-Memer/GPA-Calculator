@@ -78,10 +78,10 @@ h1, h2 {
 
 
 input, select {
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
 button {
@@ -94,7 +94,6 @@ button {
 button:hover {
   background:#1d4ed8;
 }
-
 
 .stats {
   display:grid;
@@ -118,17 +117,14 @@ button:hover {
   border-bottom:1px solid #ddd;
 }
 
-
 .course:last-child {
   border-bottom: none;
 }
-
 
 .period {
   font-weight: bold;
   margin-top: 15px;
 }
-
 
 .links {
   display: flex;
@@ -167,4 +163,9 @@ tr:hover {
 .count {
   margin-top: 15px;
   color: #555;
+}
+
+.gpa {
+  font-size:40px;
+  font-weight:bold;
 }
