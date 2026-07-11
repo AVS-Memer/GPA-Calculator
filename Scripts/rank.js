@@ -255,7 +255,7 @@ P.observe('numericValue', function() {
 window.addEventListener("load", () => {
   let g = calculateRankEstimate();
   if (g !== null) {
-    document.getElementById("usedGPA").innerHTML = "Projected Core GPA: " + gpa.toFixed(3);
+    document.getElementById("usedGPA").innerHTML = "Projected Core GPA: " + g.toFixed(3);
     calculator.setExpression({
       id: "20",
       latex: "G="+g
