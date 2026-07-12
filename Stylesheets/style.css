@@ -60,7 +60,6 @@ h1, h2 {
   color: #1f2937;
 }
 
-
 .card {
   background: white;
   padding: 20px;
@@ -76,7 +75,6 @@ h1, h2 {
   align-items: center;
 }
 
-
 input, select {
   padding: 12px;
   font-size: 16px;
@@ -84,7 +82,14 @@ input, select {
   border-radius: 6px;
 }
 
+input {
+  width: 90%;
+}
+
 button {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
   background:#2563eb;
   color:white;
   border:none;
@@ -93,6 +98,10 @@ button {
 
 button:hover {
   background:#1d4ed8;
+}
+
+.remove {
+  background:#dc2626;
 }
 
 .stats {
@@ -157,7 +166,7 @@ th, td {
 }
 
 tr:hover {
-  background: #f3f4f6;
+  background: #f8fafc;
 }
 
 .count {
@@ -168,4 +177,26 @@ tr:hover {
 .gpa {
   font-size:40px;
   font-weight:bold;
+}
+
+
+.course-result {
+  background: #f8fafc;
+  padding: 15px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.course-info {
+  flex: 1;
+}
+
+.course-result button {
+  margin-top: 0;
+  white-space: nowrap;
 }
