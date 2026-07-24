@@ -40,9 +40,7 @@ function validateRankEligibility(courses, graduationYear){
         if (years[year] < 5) {
             if (years[year] === 1) warnings.push(`${year} has only 1 course. Add at least 5 courses for a reliable estimate.`);
             else warnings.push(`${year} has only ${years[year]} courses. Add at least 5 courses for a reliable estimate.`);
-            }
         }
-
     });
     return warnings;
 }
