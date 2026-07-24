@@ -220,3 +220,12 @@ tr:hover {
 #calculator {
   height:500px;
 }
+
+#gpaResults {
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+#results {
+    margin-top: 15px;
+}
