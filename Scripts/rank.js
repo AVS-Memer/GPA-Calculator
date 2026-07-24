@@ -36,36 +36,20 @@ function validateRankEligibility(courses, graduationYear){
         years[year]++;
     });
 
-
-
     Object.keys(years).forEach(year=>{
-
-
-        if(years[year] < 5){
-
-            warnings.push(
-                `${year} has only ${years[year]} courses. Add at least 5 courses for a reliable estimate.`
-            );
-
+        if (years[year] < 5) {
+            if (years[year] === 1) warnings.push(`${year} has only 1 course. Add at least 5 courses for a reliable estimate.`);
+            else warnings.push(`${year} has only ${years[year]} courses. Add at least 5 courses for a reliable estimate.`);
+            }
         }
 
     });
-
-
-
     return warnings;
-
 }
 
-
-
 // Remove courses that should not affect GPA
-
 function getSixSemesterCourses(courses, graduationYear){
-
-
-    let seniorStart =
-        graduationYear - 1;
+    let seniorStart = graduationYear - 1;
 
 
     return courses.filter(course=>{
